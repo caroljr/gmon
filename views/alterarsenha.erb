@@ -1,0 +1,54 @@
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Alterar Senha</li>
+      </ol>
+    </div>
+    <div class="container">
+      <div class="row">
+
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h4><i class="fa fa-wrench" style="margin-right:8px;"></i>Alterar Senha</h4>
+          </div>
+          <div class="panel-body">
+            <form action="/submitalterarsenha" method="POST" class="form-horizontal row-border" data-validate="parsley" id="validate-form" >
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Nova senha</label>
+                <div class="col-sm-3">
+                  <input name="novasenha" type="password" id="ps1" required="required" class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">Repetir nova senha</label>
+                <div class="col-sm-3">
+                  <input type="password" data-equalto="#ps1" required="required" class="form-control" >
+                </div>
+              </div>
+
+            </form>
+          </div>
+
+          <div class="panel-footer">
+            <div class="row">
+              <div class="col-sm-6 col-sm-offset-2">
+                <div class="btn-toolbar">
+                  <button class="btn-primary btn" onclick="javascript:$('#validate-form').parsley( 'validate' ); $('#validate-form').submit();" type="submit">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript' src='assets/plugins/form-parsley/parsley.min.js'></script>
+<script type='text/javascript' src='assets/demo/demo-formvalidation.js'></script>
+
+

@@ -1,0 +1,246 @@
+<style>
+  td.details-control {background: url('assets/details_open.png') no-repeat center center; cursor: pointer; background-color: inherit;}
+  tr.shown td.details-control {background: url('assets/details_close.png') no-repeat center center; background-color: inherit;}
+  .dataTables_wrapper .dataTables_filter input {margin: 0px; height: 24px; font-size: 14px;}
+  input[type="search"] {box-sizing: inherit;}
+  .dataTables_info {font-size: 14px;}
+  select {width: 75px; height: 27px; font-size: 14px; padding-top: 3px;}
+  .botaoEditar {height: 20px; padding: 0px 4px !important;}
+  .botaoRecarregar {height: 20px; padding: 0px 4px !important; }
+  table thead {background: #ffffff; font-size:14px;}
+  .tabletit { background: #ccddff; color: black; width: 7%; font-size: 14px; font-weight: bold;}
+  .celtit { background: #999; color: white; font-size: 14px; font-weight: bold; padding:5px !important; min-width: 100px;}
+  .celval { padding-left:5px !important; padding-right:7px !important; white-space: normal !important;}
+  .coluna { height:20px; padding-left:5px !important; white-space: normal !important; font-size: 14px; border-right: 1px dashed lightgray;}
+  .coluna2 {white-space: normal !important; text-align: center; font-size: 14px; border-right: 1px dashed lightgray;}
+  .finicio { text-align:center; height:25px; width:90px; padding:0px; margin-right:15px; margin-bottom:15px; display:inline;}
+  .ftermino { text-align:center; height:25px; width:90px; padding:0px; margin-right:10px; margin-bottom:15px; display:inline;}
+  .apagado { color: #b5b5b5 !important; }
+</style>
+
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Administração</li>
+        <li class="active">Auditoria</li>
+      </ol>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+
+          <table border="0" cellspacing="0" cellpadding="5" class="tpesquisa">
+            <tbody>
+            <tr>
+              <td><div style="display:inline;">De </div><input type="text" class="finicio" id="inicio" value="<%=@ini%>" onChange="$('#dashboard').DataTable().ajax.reload(null, false)"></td>
+              <td><div style="display:inline;">Até </div><input type="text" class="ftermino" id="termino" value="<%=@ter%>" onChange="$('#dashboard').DataTable().ajax.reload(null, false)"></td>
+            </tr>
+            </tbody>
+          </table>
+          <table id="dashboard" class="display compact hover stripe" style="font-size:14px;">
+            <thead>
+            <tr>
+              <th>Detalhes</th>
+              <th>Ação</th>
+              <th>Usuário</th>
+              <th>Data</th>
+              <th>Campo Alterados</th>
+            </tr>
+            </thead>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<!--<script type="text/javascript" src="js/datatables_light.min.js"></script>-->
+<!--<script type="text/javascript" src="js/dataTables.select.min.js"></script>-->
+<!--<script type="text/javascript" src="js/dataTables.buttons.min.js"></script>-->
+<script src='lib/moment-with-locales.min.js'></script>
+<script src='lib/datetime-moment.js'></script>
+
+<script>
+    function format(rowData) {
+        const div = $('<div/>').addClass('loading').text('Carregando...');
+        $.ajax({
+            url: '/audit2',
+            dataSrc: '',
+            data: {id: rowData.id},
+            dataType: 'json',
+            success: function (json) {
+                let html;
+                if (!json[0]) {
+                    html = '';
+                } else {
+                    html = '<table border="2" style="margin:5px 0 5px 35px !important; border-style:solid; border-color:gray; border-width:1px;">' +
+                      '<thead><th class="celtit">Campo</th><th class="celtit">Valor anterior</th><th class="celtit">Valor novo</th></thead><tbody>';
+                    for (i = 0; i < json.length; i++) {
+                        if (json[i]['valores'][0] == null) { json[i]['valores'][0] = '' }
+                        if (json[i]['valores'][1] == null) { json[i]['valores'][1] = '' }
+                        html = html + '<tr><td class="celval" style="width:12%;">' + json[i]['campo'] +
+                          '</td><td class="celval" style="width:44%;">' + json[i]['valores'][0] +
+                          '</td><td class="celval" style="width:44%;">' + json[i]['valores'][1] +
+                          '</tr>'
+                    };
+                    html = html + '</tbody></table>';
+                };
+                div.html(html).removeClass('loading');
+            }
+        });
+        return div;
+    }
+
+    $(document).ready(function () {
+        $.fn.dataTable.moment('DD/MMM/YYYY');
+        $.fn.dataTable.moment('DD/MMM/YY');
+        $.fn.dataTable.moment('DD/MMM HH:mm');
+        $.fn.dataTable.moment('DD/MMM/YY HH:mm');
+        moment.locale('pt-br');
+        const table = $('#dashboard').DataTable({
+            stateSave: true,
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [3, 'desc'],
+            autoWidth: false,
+            scroller: false,
+            scrollY: 400,
+            scrollCollapse: true,
+            pagingType: "numbers",
+            ajax: {
+                url: "/audit1",
+                dataSrc: '',
+                data: function (d) {
+                    d.inicio = $('#inicio').val();
+                    d.termino = $('#termino').val();
+                }
+            },
+            deferRender: true,
+            columns: [
+                {orderable: false, data: null, defaultContent: ''},
+                {data: "descricao", className: 'coluna'},
+                {data: "usuario", className: 'coluna'},
+                {
+                    data: "created_at", className: 'coluna', render: function (d) {
+                        if (d != null) {
+                            return moment(d).format('DD/MMM/YY HH:mm').toUpperCase();
+                        } else {
+                            return ''
+                        }
+                    }
+                },
+                {orderable: false, data: "campos", className: 'coluna'},
+                {data: "id", visible: false},
+                {data: "alteracoes", visible: false},
+            ],
+            columnDefs: [{
+                targets: 0,
+                createdCell: function (td, cellData, rowData, row, col) {
+                    if (rowData.campos != null) {
+                        td.className = 'details-control'
+                    }
+                }
+            }],
+            dom: 'fti',
+            // buttons: [
+            //     {
+            //         text: 'Recarregar', className: 'botaoRecarregar',
+            //         action: function () {
+            //             table.state.clear();
+            //             window.location.href = '/auditoria';
+            //         }
+            //     },
+            //     {
+            //         extend: 'collection',
+            //         text: 'Exportar',
+            //         className: 'botaoEditar',
+            //         buttons: [
+            //             {
+            //                 text: 'Excel', extend: 'excel',
+            //                 exportOptions: {columns: [1, 2, 3, 4, 6]},
+            //                 filename: 'rp3_auditoria', title: 'Auditoria'
+            //             },
+            //             {
+            //                 text: 'PDF', extend: 'pdf', orientation: 'landscape',
+            //                 exportOptions: {columns: [1, 2, 3, 4, 6]},
+            //                 filename: 'rp3_auditoria', title: 'Auditoria'
+            //             }
+            //         ]
+            //     }
+            // ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registro(s)",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+                select: {
+                    rows: {
+                        _: "%d registros selecionados",
+                        0: "Nenhum registro selecionado",
+                        1: "1 registro selecionado"
+                    }
+                }
+            }
+        });
+
+        $('#dashboard tbody').on('click', 'td.details-control', function () {
+            const tr = $(this).closest('tr');
+            const row = table.row(tr);
+            const linha = table.row(row)[0][0];
+            if (row.child.isShown()) {
+                row.child.hide();
+                tr.removeClass('shown');
+                table.rows().eq(0).each(function (idx) {
+                    if (idx != linha) {
+                        const row2 = table.row(idx);
+                        const tr2 = row2.node();
+                        $(tr2).removeClass('apagado');
+                    }
+                });
+            }
+            else {
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+                tr.removeClass('apagado');
+                table.rows().eq(0).each(function (idx) {
+                    if (idx != linha){
+                        const row2 = table.row(idx);
+                        const tr2 = row2.node();
+                        row2.child.hide();
+                        $(tr2).removeClass('shown');
+                        $(tr2).addClass('apagado');
+                    }
+                });
+            }
+        });
+    });
+
+    $(function () {
+        $('#inicio').fdatepicker({
+            format: 'dd-mm-yyyy',
+            language: 'pt-br',
+            disableDblClickSelection: false,
+            leftArrow: '<<',
+            rightArrow: '>>',
+            closeButton: false
+        });
+        $('#termino').fdatepicker({
+            format: 'dd-mm-yyyy',
+            language: 'pt-br',
+            disableDblClickSelection: false,
+            leftArrow: '<<',
+            rightArrow: '>>',
+            closeButton: false
+        });
+    });
+</script>

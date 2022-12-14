@@ -1,0 +1,46 @@
+.onoffswitch {
+    position: relative; width: 67px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+}
+.onoffswitch-checkbox {
+    display: none !important;
+}
+.onoffswitch-label {
+    display: block !important; overflow: hidden !important; cursor: pointer !important;
+    border: 2px solid #FFFFFF !important; border-radius: 28px !important; margin: 0px !important;
+}
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+    font-size: 10px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "Ativo";
+    padding-left: 8px;
+    background-color: #9E9E9E; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+    content: "Inativo";
+    padding-right: 8px;
+    background-color: #9E9E9E; color: #FFFFFF;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 14px; margin: 3px;
+    background: #9E9E9E;
+    position: absolute; top: 0; bottom: 0;
+    right: 43px;
+    border: 2px solid #FFFFFF; border-radius: 28px;
+    transition: all 0s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0 !important;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px !important;
+    background-color: #24C786 !important;
+}

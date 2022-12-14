@@ -1,0 +1,301 @@
+<style>
+  .control-label { font-size: 14px; font-weight: 600; padding-top:4px !important; }
+  select.form-control { font-size: 14px; height: 30px; padding: 2px 9px 5px 4px;}
+  .form-group { padding-bottom:6px !important; }
+  div.DTE_Inline_Field { display:inline-block;}
+  div.botao1 { display:inline-block;  }
+  div > div.botao1 > div > button { margin-left: 5px; padding:0px 4px; background-color: transparent; border:0;}
+  label.DTE_Label { display: none; }
+  .dataTables_wrapper table { margin-top: 0; }
+  td.direita { text-align:right !important; padding: 2px 15px 2px 5px !important;}
+  td.esquerda { text-align:left !important; padding: 2px 5px 2px 5px !important;}
+  td.centro { text-align:center !important; padding: 2px 5px 2px 5px !important;}
+  .botao { height:16px; padding-top:3px;}
+  .loader {
+      border: 16px solid #f3f3f3;
+      border-top: 16px solid #3498db;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 2s linear infinite;
+  }
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+</style>
+<link rel='stylesheet' type='text/css' href='css/PNotifyBrightTheme.css' />
+<link rel='stylesheet' type='text/css' href='DateTime-1.2.0/css/dataTables.dateTime.min.css' />
+
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Monitores</li>
+      </ol>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="panel panel-green">
+          <div class="panel-heading">
+            <h4><i class="fa fa-table" style="margin-right:8px;"></i>Cadastro Monitores</h4>
+            <div class="options">
+              <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelmon1">
+                  <i class="fa fa-chevron-up pulsate"></i>
+              </a>
+            </div>
+          </div>
+          <div class="panel-body collapse in" id="painelmon1" style="display: block;">
+
+            <div class="row">
+              <div class="col-sm-12" style="margin-top:10px;">
+                <table id="tabelamonitores" class="table table-bordered table-hover table-striped table-condensed" style="font-size:12px; width:99%;">
+                  <thead>
+                  <tr>
+                    <th>ID Monitor</th>
+                    <th>Prioridade</th>
+                    <th>Título</th>
+                    <th>DRU</th>
+                    <th>Jornada</th>
+                    <th>Produto</th>
+                    <th>Microserviço</th>
+                    <th>Sintoma</th>
+                    <th>Dashboard Impactado</th>
+                    <th>Impacto IT</th>
+                    <th>Impacto Negócio</th>
+                    <th>Int. JIRA</th>
+                    <th>Taxonomia</th>
+                    <th>TAG CCBP</th>
+                    <th>Status</th>
+                    <th>Data ativação</th>
+                    <th>Data desativação</th>
+                  </tr>
+                  </thead>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+          <div class="panel panel-orange">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-upload" style="margin-right:8px;"></i>Importar</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelmon2"><i class="fa fa-chevron-up pulsate"></i></a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="painelmon2" style="display: block;">
+              <form id="monitoresimportar" action="/monitoresimportar" method="POST" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="fileinput fileinput-new btn-file" data-provides="fileinput" id="fileinput">
+                    <span class="btn btn-success btn-file fileinput-new" data-trigger="fileinput"><i class="fa fa-plus fileinput-new" style="margin-right:4px;"></i> Selecione arquivo</span>
+                    <input type="file" name="file">
+                    <strong><span class="fileinput-filename fileinput-exists"></span></strong>
+                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">&times;</a>
+                  </div>
+                </div>
+                <div class="row" style="margin-top:10px;">
+                  <button type="submit" disabled class="btn btn-primary" id="btnSubmit"><i class="fa fa-upload" style="margin-right:4px;"></i> Importar arquivo</button>
+                </div>
+              </form>
+            </div>
+          </div>
+      </div>
+
+<!--      <div class="row">
+        <div class="panel panel-indigo">
+          <div class="panel-heading rounded-bottom">
+            <h4><i class="fa fa-download" style="margin-right:8px;"></i>Exportar</h4>
+            <div class="options">
+              <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painel5"><i class="fa fa-chevron-up pulsate"></i></a>
+            </div>
+          </div>
+          <div class="panel-body collapse in" id="painel5" style="display: block;">
+            <div class="row">
+              <form action="/relatoriomonitores" method="POST">
+                <button type="submit" class="btn" id="botaoexportar"><i class="fa fa-download" style="margin-right:4px;"></i> Excel</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>-->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="DataTables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script type="text/javascript" src="Editor-2.0.10/js/dataTables.editor.js"></script>
+<script type="text/javascript" src="DateTime-1.2.0/js/dataTables.dateTime.min.js"></script>
+<script type='text/javascript' src='assets/plugins/jquery-toggles/toggles.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/highcharts.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/highcharts-more.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/sankey.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/organization.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/exporting.js'></script>
+<script type='text/javascript' src='assets/plugins/form-jasnyupload/fileinput.min.js'></script>
+<script src='lib/moment-with-locales.min.js'></script>
+<script src='lib/datetime-moment.js'></script>
+<script type='text/javascript' src='assets/plugins/form-datepicker/js/locales/bootstrap-datepicker.pt-BR.js' charset="UTF-8"></script>
+<script type='text/javascript' src='js/PNotify.js'></script>
+<script type='text/javascript' src='js/PNotifyButtons.js'></script>
+<script type='text/javascript' src='js/PNotifyCallbacks.js'></script>
+<script type='text/javascript' src='js/PNotifyConfirm.js'></script>
+<script type='text/javascript' src='js/PNotifyHistory.js'></script>
+<script type='text/javascript' src='js/PNotifyReference.js'></script>
+<script type='text/javascript' src='assets/plugins/form-parsley/parsley.min.js'></script>
+
+<script>
+    $(function() {
+        $.fn.dataTable.moment('DD/MMM/YY');
+        $.fn.dataTable.moment('DD/MM/YY');
+        $.fn.dataTable.moment('DD-MM-YY');
+        $.fn.dataTable.moment('MMM/YY');
+        $.fn.dataTable.moment('DD/MM HH:mm');
+        moment.locale('pt-br');
+
+        $('a.panel-collapse').click(function() {
+            $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
+            return false;
+        });
+
+        const fileinput = $('.fileinput').fileinput();
+        fileinput.on('change.bs.fileinput', function(e, files){
+            $('.btn-primary').attr("disabled", false);
+        });
+
+        $("#monitoresimportar").submit(function (event) {
+            event.preventDefault();
+            const texto = '<div class="row" style="margin-bottom:10px;">Processando arquivo...</div><div class="row loader"></div>'
+            let divinc2 = $('#painelmon2').html(texto);
+            let formData = new FormData(this);
+            $.ajax({
+                url: '/monitoresimportar',
+                type: 'POST',
+                data: formData,
+                timeout: 300000,
+                cache: false,
+                contentType: false,
+                processData: false
+            })
+                .done(function(data) { tablemonitores.ajax.reload(); divinc2.html(data); })
+                .fail(function (jX, err, errT) { divinc2.html(jX.status + "<br>" + err + "<br>" + errT) });
+            return divinc2;
+        });
+
+        let editormonitor = new $.fn.dataTable.Editor({
+            ajax: {
+                edit: {
+                    url: "/monitoresatualizar",
+                    success: function () {
+                        tablemonitores.ajax.reload();
+                    }
+                },
+                create: {
+                    url: "/monitorescriar",
+                    success: function () {
+                        tablemonitores.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelamonitores",
+            idSrc: 'id',
+            fields: [
+                {name: "dru.nome", label: "DRU", type: "select", options: <%= @dru %> },
+                {name: "jornada.nome", label: "Jornada", type: "select", options: <%= @jornada %> },
+                {name: "produto.nome", label: "Produto", type: "select", options: <%= @produto %> },
+                {name: "microservico.nome", label: "Microserviço", type: "select", options: <%= @microservico %> },
+                {name: "sintoma.nome", label: "Sintoma", type: "select", options: <%= @sintoma %> },
+                {name: "statusmonitoracao.nome", label: "Status", type: "select", options: <%= @statusmonitoracao %> },
+                {name: "prioridade", label: "Prioridade", type: "select", options:
+                      [ {label:"P1",value:"P1"}, {label:"P2",value:"P2"}, {label:"P3",value:"P3"}, {label:"P4",value:"P4"}, {label:"P5",value:"P5"} ]
+                },
+                {name: "titulo", label: "Título", type: "textarea"},
+                {name: "dashboard", label: "Dashboard Impactado"},
+                {name: "impacto_it", label: "Impacto IT", type: "textarea"},
+                {name: "impacto_negocio", label: "Impacto Negócio", type: "textarea"},
+                {name: "integracao_jira", label: "Int. JIRA", type: "select", def: "true", options: [ { label: "SIM", value: true }, { label: "NÃO", value: false } ] },
+                {name: "taxonomia", label: "Taxonomia", type: "select", def: "true", options: [ { label: "SIM", value: true }, { label: "NÃO", value: false } ] },
+                {name: "tag_ccbp", label: "TAG CCBP", type: "select", def: "true", options: [ { label: "SIM", value: true }, { label: "NÃO", value: false } ] },
+                {name: "data_ativacao", label: "Data ativação", type: "datetime", displayFormat: "YYYY-MM-DD", wireFormat: "YYYY-MM-DD", opts: {momentLocale: 'pt-br'} },
+                {name: "data_desativacao", label: "Data desativação", type: "datetime", displayFormat: "YYYY-MM-DD", wireFormat: "YYYY-MM-DD", opts: {momentLocale: 'pt-br'} }
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+
+        $('#tabelamonitores').on( 'click', 'tbody td', function () {
+            editormonitor.bubble( this, { submit: 'changed'} );
+        } );
+
+        let tablemonitores = $('#tabelamonitores').DataTable({
+            ajax: {url: "/monitorespopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 340,
+            scrollX: false,
+            scrollCollapse: true,
+            stateSave: false,
+            columns: [
+                {data: "monitor_id", className: 'direita'},
+                {data: "prioridade", className: 'esquerda'},
+                {data: "titulo", className: 'esquerda'},
+                {data: "dru.nome", className: 'esquerda'},
+                {data: "jornada.nome", className: 'esquerda'},
+                {data: "produto.nome", className: 'esquerda'},
+                {data: "microservico.nome", className: 'esquerda'},
+                {data: "sintoma.nome", className: 'esquerda'},
+                {data: "dashboard", className: 'esquerda'},
+                {data: "impacto_it", className: 'esquerda'},
+                {data: "impacto_negocio", className: 'esquerda'},
+                {data: "integracao_jira", className: 'esquerda', render: function (d) { if (d) { return 'SIM' } else { return 'NÃO' } } },
+                {data: "taxonomia", className: 'esquerda', render: function (d) { if (d) { return 'SIM' } else { return 'NÃO' } }},
+                {data: "tag_ccbp", className: 'esquerda', render: function (d) { if (d) { return 'SIM' } else { return 'NÃO' } }},
+                {data: "statusmonitoracao.nome", className: 'esquerda'},
+                {data: "data_ativacao", className: 'direita', render: function (d) { if (d != null) { return moment.utc(d).format('DD/MM/YY').toUpperCase(); } else { return '' } } },
+                {data: "data_desativacao", className: 'direita', render: function (d) { if (d != null) { return moment.utc(d).format('DD/MM/YY').toUpperCase(); } else { return '' } } },
+                {data: "id", visible: false},
+                {data: "dru_id", visible: false},
+                {data: "jornada_id", visible: false},
+                {data: "produto_id", visible: false},
+                {data: "microservico_id", visible: false},
+                {data: "sintoma_id", visible: false},
+                {data: "status_monitoracao_id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+                {
+                    extend: "create",
+                    editor: editormonitor,
+                    text: "Criar registro"
+                }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+    });
+</script>

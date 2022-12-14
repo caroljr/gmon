@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CCBP GMon</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Carol Figueiredo">
+  <link rel="stylesheet" href="fontawesome-pro-5.10.2-web/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css?=140">
+  <link rel="stylesheet" href="assets/css/sans_pro.css">
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-select2/select2.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-multiselect/css/multi-select.css' />
+  <link rel='stylesheet' type='text/css' href='assets/js/jqueryui.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-daterangepicker/daterangepicker-bs3.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/fullcalendar/fullcalendar.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-markdown/css/bootstrap-markdown.min.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-toggle/toggles.css' />
+  <link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="css/buttons.dataTables.min.css"/>
+  <link rel="stylesheet" type="text/css" href="Editor-2.0.10/css/editor.dataTables.min.css"/>
+  <link rel='stylesheet' type='text/css' href='assets/plugins/jquery-fileupload/css/jquery.fileupload-ui.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/jquery-toggles/css/toggles-full.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-multiselect/css/multi-select.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/pines-notify/jquery.pnotify.default.css' />
+  <link rel='stylesheet' type='text/css' href='assets/plugins/form-nestable/jquery.nestable.css' />
+  <link rel="shortcut icon" type="image/png" href="assets/favicon.ico">
+  <link rel="stylesheet" type='text/css' href="css/foundation-datepicker.css">
+
+</head>
+
+<body class="collapse-leftbar">
+<header class="navbar navbar-inverse navbar-fixed-top" role="banner" style="background-color:#003366;">
+  <a id="leftmenu-trigger" class="tooltips" data-toggle="tooltip" data-placement="right" title="Barra Menu Lateral"></a>
+
+  <div class="navbar-header pull-left">
+    <h3 style="color:#ffffff; margin-bottom:0; font-weight:bold; padding:4px 10px 0 20px;">CCBP GMon</h3>
+  </div>
+
+  <ul class="nav navbar-nav pull-right toolbar">
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle username" data-toggle="dropdown"><span class="hidden-xs"><%= session[:nome] %> <i class="fa fa-caret-down"></i></span><img src="assets/avatar/<%= session[:user_id] %>.png" alt="" /></a>
+      <ul class="dropdown-menu userinfo arrow">
+        <li class="username">
+          <a href="#">
+            <div class="pull-left"><img class="userimg" style="margin-bottom:8px;" src="assets/avatar/<%= session[:user_id] %>.png" alt=""/></div>
+            <div class="pull-right"><h5>Olá <%= session[:nome].split(" ")[0] %>!</h5><small>Conectado como <span><%= session[:user_id] %></span></small></div>
+          </a>
+        </li>
+        <li class="userlinks">
+          <ul class="dropdown-menu">
+            <li><a href="/alterarsenha">Alterar Senha <i class="pull-right fa fa-pencil"></i></a></li>
+            <li class="divider"></li>
+            <li><a href="/logout" class="text-right">Encerrar sessão</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+
+  </ul>
+</header>
+
+<div id="page-container">
+  <nav id="page-leftbar" role="navigation">
+    <ul class="acc-menu" id="sidebar">
+
+      <% if isgmonadmin %>
+        <li><a href="javascript:;"><i class="fa fa-cog"></i> <span>Administração</span></a>
+          <ul class="acc-menu">
+            <li><a href="admusuarios">Usuários</a></li>
+            <li><a href="admcriarusuario">Criar usuário</a></li>
+            <li><a href="javascript:;">Logs</a>
+              <ul class="acc-menu">
+                <li><a href="admlogstdout">Stdout</a></li>
+                <li><a href="admlogstderr">Stderr</a></li>
+                <li><a href="admlogjobs">Jobs</a></li>
+              </ul>
+            </li>
+            <li><a href="auditoria">Auditoria</a></li>
+          </ul>
+        </li>
+        <li><a href="/catalogo"><i class="fas fa-list-ul"></i> <span>Catálogo</span></a></li>
+      <% end %>
+
+      <li><a href="/monitores"><i class="fas fa-alarm-exclamation"></i> <span>Monitores</span></a></li>
+
+
+    </ul>
+  </nav>
+
+  <script type='text/javascript' src='assets/js/jquery-1.10.2.min.js'></script>
+  <script type='text/javascript' src='assets/js/jqueryui-1.10.3.min.js'></script>
+  <script type='text/javascript' src='assets/js/bootstrap.min.js'></script>
+  <script type='text/javascript' src='assets/js/enquire.js'></script>
+  <script type='text/javascript' src='assets/js/jquery.cookie.js'></script>
+  <script type='text/javascript' src='assets/js/jquery.nicescroll.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/sparklines/jquery.sparklines.min.js'></script>
+  <script type='text/javascript' src='assets/js/placeholdr.js'></script>
+  <script type='text/javascript' src='assets/plugins/pulsate/jQuery.pulsate.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/pines-notify/jquery.pnotify.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-select2/select2.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-autosize/jquery.autosize-min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-daterangepicker/daterangepicker.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-daterangepicker/moment.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-datepicker/js/bootstrap-datepicker.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-inputmask/jquery.inputmask.bundle.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-nestable/jquery.nestable.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/form-nestable/app.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/charts-flot/jquery.flot.min.js'></script>
+  <script type='text/javascript' src='assets/plugins/charts-flot/jquery.flot.orderBars.min.js'></script>
+  <script type='text/javascript' src='js/jquery.flot.barnumbers.enhanced.min.js'></script>
+  <script type='text/javascript' src='assets/demo/demo-alerts.js'></script>
+  <script src="js/foundation-datepicker.js"></script>
+  <script src="js/locales/foundation-datepicker.pt-br.js"></script>
+
+  <%= yield %>
+</div>
+
+<div class="modal fade" id="notificacoes" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-g">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Notificações</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-condensed" style="font-size:11px;">
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript' src='assets/plugins/codeprettifier/prettify.js'></script>
+<script type='text/javascript' src='assets/plugins/form-toggle/toggle.min.js'></script>
+<script type='text/javascript' src='assets/js/application.js'></script>
+<script type='text/javascript' src='assets/plugins/form-parsley/parsley.min.js'></script>
+<script type='text/javascript' src='assets/demo/demo-formvalidation.js'></script>
+
+</body>
+</html>
+

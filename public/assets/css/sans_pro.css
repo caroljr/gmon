@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro'), local('SourceSansPro'), url('../fonts/sans_pro/SourceSansPro-Regular.woff') format('woff');
+}
+
+/*
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Extra Light'), local('SourceSansProExtraLight'), url('../fonts/sans_pro/SourceSansPro-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Extra Light Italic'), local('SourceSansProExtraLightItalic'), url('../fonts/sans_pro/SourceSansPro-ExtraLightItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Light'), local('SourceSansProLight'), url('../fonts/sans_pro/SourceSansPro-Light.woff') format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Light Italic'), local('SourceSansProLightItalic'), url('../fonts/sans_pro/SourceSansPro-LightItalic.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Italic'), local('SourceSansProItalic'), url('../fonts/sans_pro/SourceSansPro-RegularItalic.woff') format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Semi Bold'), local('SourceSansProSemiBold'), url('../fonts/sans_pro/SourceSansPro-SemiBold.woff') format('woff');
+}
+@font-face {
+    font-family: 'Source Sans Pro';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Source Sans Pro Semi Bold Italic'), local('SourceSansProSemiBoldItalic'), url('../fonts/sans_pro/SourceSansPro-SemiBoldItalic.woff') format('woff');
+}
+*/

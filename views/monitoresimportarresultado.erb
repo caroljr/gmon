@@ -1,0 +1,25 @@
+<div class="alert alert-dismissable alert-success">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+  <h4>Importação executada com sucesso!</h4>
+
+  <div class="row" style="margin-top:4px;">
+    <strong>Monitores sem ID MONITOR preenchido na planilha:</strong><br>
+    <% @sem_monitor_id.each do |mon| %>
+      Linha planilha: <%= mon[0] %><br>
+    <% end %>
+  </div>
+
+  <div class="row" style="margin-top:4px;">
+    <strong>Monitores com ID MONITOR já cadastrados no GMon:</strong><br>
+    <% @nao_inseridos.each do |mon| %>
+      ID MONITOR: <%= mon[0] %> / DRU: <%= mon[2] %><br>
+    <% end %>
+  </div>
+
+  <div class="row" style="margin-top:4px;">
+    <strong>Monitores importados para o GMon:</strong><br>
+    <% @inseridos.each do |mon| %>
+      ID MONITOR: <%= mon[0] %> / DRU: <%=mon[2]%> / JORNADA: <%=mon[3]%> / PRODUTO: <%=mon[4]%> / MICROSERVIÇO: <%=mon[5]%> / SINTOMA: <%=mon[6]%> / STATUS MONIT.: <%=mon[7]%><br>
+    <% end %>
+  </div>
+</div>

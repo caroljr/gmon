@@ -1,0 +1,803 @@
+<style>
+    .control-label { font-size: 14px; font-weight: 600; padding-top:4px !important; }
+    select.form-control { font-size: 14px; height: 30px; padding: 2px 9px 5px 4px;}
+    .form-group { padding-bottom:6px !important; }
+    div.DTE_Inline_Field { display:inline-block;}
+    div.botao1 { display:inline-block;  }
+    div > div.botao1 > div > button { margin-left: 5px; padding:0px 4px; background-color: transparent; border:0;}
+    .dataTables_wrapper table { margin-top: 0; }
+    td.direita { text-align:right !important; padding: 2px 15px 2px 5px !important;}
+    td.esquerda { text-align:left !important; padding: 2px 5px 2px 5px !important;}
+    td.centro { text-align:center !important; padding: 2px 5px 2px 5px !important;}
+    .botao { height:16px; padding-top:3px;}
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-top: 16px solid #3498db;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+    }
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+<link rel='stylesheet' type='text/css' href='css/PNotifyBrightTheme.css' />
+
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Catálogo</li>
+      </ol>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-primary">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fas fa-tags" style="margin-right:8px;"></i>Gerador de TAGs</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#geradortags">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="geradortags" style="display: block;">
+
+              <div class="row">
+                <div class="col-sm-12">
+
+                  <form class="form-horizontal" id="validate-form">
+                    <div class="form-group">
+                      <label class="col-sm-1 control-label">Insira o texto</label>
+                      <div class="col-sm-3">
+                        <input type="text" id="textotag" data-parsley-tag="" data-parsley-length="[3,60]"
+                               data-parsley-required-message="Campo obrigatório!"
+                               data-parsley-length-message="ATENÇÃO!! Mínimo de 3 e máximo de 60 caracteres!"
+                               data-parsley-trigger="change"
+                               placeholder="mínimo de 3 e máximo de 60 caracteres" required="required" class="form-control ">
+                      </div>
+                      <div class="col-sm-3">
+                        <button class="btn btn-success btn-label"><i class="fas fa-tags"></i> Clique aqui para gerar a TAG</button>
+                      </div>
+                      <div class="col-sm-5">
+                        <label id="labelvalor" class="col-sm-2 control-label" style="display:none;">Valor da tag: </label>
+                        <div class="col-sm-3"><input type="text" disabled style="display: none; height: 34px; width:380px;" rows="1" id="resposta"></div>
+                      </div>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-primary">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>DRU</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#paineldru">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="paineldru" style="display: block;">
+
+              <div class="row">
+                <div class="col-sm-11">
+                  <table id="tabeladru" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>TAG</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-info">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>Jornada</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#paineljornada">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="paineljornada" style="display: block;">
+              <div class="row">
+                <div class="col-sm-11">
+                  <table id="tabelajornada" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>TAG</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-green">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>Produto</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelproduto">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="painelproduto" style="display: block;">
+              <div class="row">
+                <div class="col-sm-12">
+                  <table id="tabelaproduto" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>TAG</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-indigo">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>Microserviço</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelmicroservico">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="painelmicroservico" style="display: block;">
+              <div class="row">
+                <div class="col-sm-11">
+                  <table id="tabelamicroservico" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>TAG</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-toyo">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>Sintoma</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelsintoma">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="painelsintoma" style="display: block;">
+              <div class="row">
+                <div class="col-sm-11">
+                  <table id="tabelasintoma" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>TAG</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-11">
+          <div class="panel panel-orange">
+            <div class="panel-heading rounded-bottom">
+              <h4><i class="fa fa-table" style="margin-right:8px;"></i>Status Monitoração</h4>
+              <div class="options">
+                <a href="javascript:;" class="panel-collapse" data-toggle="collapse" data-target="#painelstatusmonitoracao">
+                  <i class="fa fa-chevron-up pulsate"></i>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body collapse in" id="painelstatusmonitoracao" style="display: block;">
+              <div class="row">
+                <div class="col-sm-6">
+                  <table id="tabelastatusmonitoracao" class="table table-bordered table-hover table-striped table-condensed" style="font-size:14px; width:100%;">
+                    <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Status</th>
+                    </tr>
+                    </thead>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="DataTables/DataTables-1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+<script type="text/javascript" src="Editor-2.0.10/js/dataTables.editor.js"></script>
+<script type='text/javascript' src='assets/plugins/jquery-toggles/toggles.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/highcharts.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/highcharts-more.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/sankey.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/organization.js'></script>
+<script type='text/javascript' src='highcharts-7.1.3/exporting.js'></script>
+<script type='text/javascript' src='assets/plugins/form-jasnyupload/fileinput.min.js'></script>
+<script src='lib/moment-with-locales.min.js'></script>
+<script src='lib/datetime-moment.js'></script>
+<script type='text/javascript' src='assets/plugins/form-datepicker/js/locales/bootstrap-datepicker.pt-BR.js' charset="UTF-8"></script>
+<script type='text/javascript' src='js/PNotify.js'></script>
+<script type='text/javascript' src='js/PNotifyButtons.js'></script>
+<script type='text/javascript' src='js/PNotifyCallbacks.js'></script>
+<script type='text/javascript' src='js/PNotifyConfirm.js'></script>
+<script type='text/javascript' src='js/PNotifyHistory.js'></script>
+<script type='text/javascript' src='js/PNotifyReference.js'></script>
+<script type='text/javascript' src='assets/plugins/form-parsley/parsley.min.js'></script>
+
+<script>
+    const formInstance = $("#validate-form").parsley();
+
+    $('#validate-form').on('submit',function(e) {
+        e.preventDefault();
+        if ( formInstance.isValid() ) {
+            let formData = {
+                textotag: $("#textotag").val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/gerartag",
+                data: formData,
+                dataType: "html",
+                encode: true,
+                success: function( data,status,xhr ){
+                    $('#resposta').val( data );
+                    $('#labelvalor').css("display", "block");
+                    $('#resposta').css("display", "block");
+                    navigator.clipboard.writeText(data);
+                }
+            });
+        }
+    });
+
+    $(document).ready(function() {
+        let editordru = new $.fn.dataTable.Editor({
+            ajax: {url: "/druatualizar",
+                success: function () {
+                    tabledru.ajax.reload();
+                },
+                create: {url: "/drucriar",
+                    success: function () {
+                        tabledru.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabeladru",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editordru.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            labelInfo: 'status no GMon',
+            def:  "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO", value: false }
+            ]
+        } );
+        $('#tabeladru').on( 'click', 'tbody td', function (e) {
+            editordru.inline( this );
+        } );
+
+        let tabledru = $('#tabeladru').DataTable({
+            ajax: {url: "/drupopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 220,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "30%", className: 'esquerda'},
+                {data: "tag", width: "30%", className: 'esquerda'},
+                {data: "status", width: "8%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+              {
+                  extend: "create",
+                  editor: editordru,
+                  text: "Criar registro"
+              }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+
+        let editorjornada = new $.fn.dataTable.Editor({
+            ajax: {url: "/jornadaatualizar",
+                success: function () {
+                    tablejornada.ajax.reload();
+                },
+                create: {url: "/jornadacriar",
+                    success: function () {
+                        tablejornada.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelajornada",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editorjornada.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            def: "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO",    value: false }
+            ]
+        } );
+        $('#tabelajornada').on( 'click', 'tbody td', function (e) {
+            editorjornada.inline( this );
+        } );
+
+        let tablejornada = $('#tabelajornada').DataTable({
+            ajax: {url: "/jornadapopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 220,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "30%", className: 'esquerda'},
+                {data: "tag", width: "30%", className: 'esquerda'},
+                {
+                    data: "status", width: "8%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+              buttons: [
+                  {
+                      extend: "create",
+                      editor: editorjornada,
+                      text: "Criar registro"
+                  }
+              ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+
+        let editorproduto = new $.fn.dataTable.Editor({
+            ajax: {url: "/produtoatualizar",
+                success: function () {
+                    tableproduto.ajax.reload();
+                },
+                create: {url: "/produtocriar",
+                    success: function () {
+                        tableproduto.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelaproduto",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editorproduto.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            def: "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO",    value: false }
+            ]
+        } );
+        $('#tabelaproduto').on( 'click', 'tbody td', function (e) {
+            editorproduto.inline( this );
+        } );
+
+        let tableproduto = $('#tabelaproduto').DataTable({
+            ajax: {url: "/produtopopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 320,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "32%", className: 'esquerda'},
+                {data: "tag", width: "32%", className: 'esquerda'},
+                {
+                    data: "status", width: "6%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+                {
+                    extend: "create",
+                    editor: editorproduto,
+                    text: "Criar registro"
+                }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+
+        let editormicroservico = new $.fn.dataTable.Editor({
+            ajax: {url: "/microservicoatualizar",
+                success: function () {
+                    tablemicroservico.ajax.reload();
+                },
+                create: {url: "/microservicocriar",
+                    success: function () {
+                        tablemicroservico.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelamicroservico",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editormicroservico.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            def: "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO",    value: false }
+            ]
+        } );
+        $('#tabelamicroservico').on( 'click', 'tbody td', function (e) {
+            editormicroservico.inline( this );
+        } );
+
+        let tablemicroservico = $('#tabelamicroservico').DataTable({
+            ajax: {url: "/microservicopopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 320,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "30%", className: 'esquerda'},
+                {data: "tag", width: "30%", className: 'esquerda'},
+                {
+                    data: "status", width: "8%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+                {
+                    extend: "create",
+                    editor: editormicroservico,
+                    text: "Criar registro"
+                }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+
+        let editorsintoma = new $.fn.dataTable.Editor({
+            ajax: {url: "/sintomaatualizar",
+                success: function () {
+                    tablesintoma.ajax.reload();
+                },
+                create: {url: "/sintomacriar",
+                    success: function () {
+                        tablesintoma.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelasintoma",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editorsintoma.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            def: "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO",    value: false }
+            ]
+        } );
+        $('#tabelasintoma').on( 'click', 'tbody td', function (e) {
+            editorsintoma.inline( this );
+        } );
+
+        let tablesintoma = $('#tabelasintoma').DataTable({
+            ajax: {url: "/sintomapopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 220,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "30%", className: 'esquerda'},
+                {data: "tag", width: "30%", className: 'esquerda'},
+                {
+                    data: "status", width: "8%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+                {
+                    extend: "create",
+                    editor: editorsintoma,
+                    text: "Criar registro"
+                }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+
+        let editorstatusmonitoracao = new $.fn.dataTable.Editor({
+            ajax: {url: "/statusmonitoracaoatualizar",
+                success: function () {
+                    tablestatusmonitoracao.ajax.reload();
+                },
+                create: {url: "/statusmonitoracaocriar",
+                    success: function () {
+                        tablestatusmonitoracao.ajax.reload();
+                    }
+                }
+            },
+            table: "#tabelastatusmonitoracao",
+            idSrc: 'id',
+            fields: [
+                {name: "nome", label: 'Nome'}
+            ],
+            i18n: {
+                create: {
+                    title: "Criar registro",
+                    submit: "Criar"
+                }
+            }
+        });
+        editorstatusmonitoracao.add( {
+            type:  "select",
+            label: "Status:",
+            name:  "status",
+            def: "true",
+            options: [
+                { label: "ATIVO", value: true },
+                { label: "INATIVO",    value: false }
+            ]
+        } );
+        $('#tabelastatusmonitoracao').on( 'click', 'tbody td', function (e) {
+            editorstatusmonitoracao.inline( this );
+        } );
+
+        let tablestatusmonitoracao = $('#tabelastatusmonitoracao').DataTable({
+            ajax: {url: "/statusmonitoracaopopular", dataSrc: ""},
+            info: true,
+            paginate: false,
+            ordering: true,
+            order: [],
+            search: {regex: true},
+            autoWidth: true,
+            scrollY: 220,
+            scrollX: false,
+            scrollCollapse: true,
+            columns: [
+                {data: "nome", width: "70%", className: 'esquerda'},
+                {
+                    data: "status", width: "30%", className: 'centro', render: function (data, type) {
+                        if (data) {
+                            return "ATIVO"
+                        } else {
+                            return "<span style=\"color:red;\">INATIVO</span>"
+                        }
+                    }
+                },
+                {data: "id", visible: false}
+            ],
+            dom: "Bfti",
+            buttons: [
+                {
+                    extend: "create",
+                    editor: editorstatusmonitoracao,
+                    text: "Criar registro"
+                }
+            ],
+            language: {
+                search: "",
+                info: "_TOTAL_ registros",
+                infoEmpty: "0 registros",
+                infoFiltered: "(de um total de _MAX_)",
+                searchPlaceholder: "Pesquisar",
+                zeroRecords: "Nenhum registro encontrado",
+                sInfoThousands: ".",
+            }
+        });
+    });
+
+</script>

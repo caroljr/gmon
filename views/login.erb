@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>CCBP GMon</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="Carol Figueiredo">
+
+	<link rel="stylesheet" href="assets/css/styles.css?=140">
+	<link rel="stylesheet" href="assets/css/sans_pro.css">
+
+	<link rel="shortcut icon" type="image/png" href="assets/favicon.ico">
+
+</head>
+
+<body class="focusedform">
+
+<div style="margin-top:100px; text-align:center;">
+	<h2>Command Center BTG Pactual<br><b>GMon</b></h2>
+</div>
+<div>
+	<div class="panel panel-primary" style="border-top-color:#195ab4;margin-left:auto;margin-right:auto;">
+		<div class="panel-body" id="corpo" style="border-top-color:#195ab4;">
+			<h4 class="text-center" style="margin-bottom: 25px;">Credenciais para iniciar o acesso</h4>
+			<form action="/login" method="post" id="formLogin" class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><em class="fa fa-user"></em></span>
+							<input type="text" class="form-control" id="username" name="username" placeholder="Usuário">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-12">
+						<div class="input-group">
+							<span class="input-group-addon"><em class="fa fa-lock"></em></span>
+							<input type="password" class="form-control" id="password" name="password" placeholder="Senha">
+						</div>
+					</div>
+
+				</div>
+				<div class="clearfix">
+
+				</div>
+				<input type="submit" class="btn btn-primary btn-block" value="Iniciar" style="background-color:#195ab4;">
+			</form>
+		</div>
+
+	</div>
+</div>
+
+<script type='text/javascript' src='assets/js/jquery-1.10.2.min.js'></script>
+<script type='text/javascript' src='assets/js/jqueryui-1.10.3.min.js'></script>
+<script type='text/javascript' src='assets/js/bootstrap.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+
+<script>
+	$('#formLogin').on("submit", function (e) {
+		e.preventDefault();
+		const div = $('#corpo');
+		$.ajax({
+			type: $('#formLogin').attr('method'),
+			url: $('#formLogin').attr('action'),
+			data: $('#formLogin').serialize(),
+			success: function (html) {
+				div.append(html);
+			}
+		});
+		$('input[name=username]').val('');
+		$('input[name=password]').val('');
+		return div;
+	})
+</script>
+
+</body>
+</html>

@@ -1,0 +1,113 @@
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+    }
+    body {
+      transform: perspective(1400px) matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+      transform-style: preserve-3d;
+      background-color: transparent;
+    }
+    .gwd-img-ul03 {
+      position: absolute;
+      width: 126px;
+      height: 53px;
+      left: 9px;
+      top: 4px;
+    }
+    .gwd-p-u8kr {
+      position: absolute;
+      text-align: center;
+      height: 27px;
+      left: 140px;
+      width: 320px;
+      font-size: 24px;
+      top: 12px;
+      font-family: PTSansCaption;
+    }
+    .gwd-form-4228 {
+      position: absolute;
+      font-family: PTSansCaption;
+      left: 9px;
+      top: 73px;
+    }
+    .gwd-p-19l9 {
+      position: absolute;
+      left: 40px;
+      top: 109px;
+      font-family: PTSansCaption;
+    }
+    .gwd-p-16f2 {
+      position: absolute;
+      left: 41px;
+      top: 109px;
+      font-family: PTSansCaption;
+    }
+    .texto1 {
+      font-size: 22px;
+      font-family: PTSansCaption;
+    }
+    .texto2 {
+      font-size: 18px;
+      font-family: PTSansCaption;
+    }
+    .texto3 {
+      font-size: 14px;
+      font-family: PTSansCaption;
+    }
+    .texto3s {
+      font-weight: 900;
+      color: green;
+      font-size: 14px;
+      font-family: PTSansCaption;
+    }
+    .texto4 {
+      font-size: 12px;
+      font-family: PTSansCaption;
+    }
+    .texto5 {
+      width: 20px;
+      font-size: 18px;
+      font-family: PTSansCaption;
+    }
+    .texto6 {
+      font-size: 12px;
+      font-family: PTSansCaption;
+      color: red;
+    }
+    .gwd-p-1fjr {
+      position: absolute;
+      left: 540px;
+      top: 73px;
+      font-family: PTSansCaption;
+      font-size: 16px;
+    }
+    .gwd-p-1frc {
+      position: absolute;
+      width: 880px;
+      height: 40px;
+      left: 460px;
+      top: 11px;
+      font-family: PTSansCaption;
+      font-size: 16px;
+    }
+    .tabela1 {
+      position: absolute;
+      width: 500px;
+      left: 540px;
+      top: 120px;
+      font-family: PTSansCaption;
+      font-size: 12px;
+      border-collapse: collapse;
+    }
+    .td2 {
+      padding: 4px;
+      font-size: 12px;
+      font-family: PTSansCaption;
+    }
+    .td {
+      padding: 4px;
+    }
+
+
+

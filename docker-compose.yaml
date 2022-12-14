@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  gmon:
+    image: gmon:1.0.0
+    restart: always
+    container_name: gmon
+    environment:
+      RACK_ENV: "production"
+    ports:
+      - "8080:8080"
+    networks:
+      - gmon-network
+
+  postgres:
+    image: postgres:14.2-alpine
+    restart: always
+    container_name: postgres
+    environment:
+      POSTGRES_PASSWORD: "moc1998"
+    volumes:
+      - /app/postgres/data:/var/lib/postgresql/data
+    networks:
+      - gmon-network
+      
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "carol.figueiredo@csf.inf.br"
+      PGADMIN_DEFAULT_PASSWORD: "moc1998"
+    volumes:
+      - /app/postgres/pgadmin_data:/var/lib/pgadmin
+    ports:
+      - "8081:80"
+    depends_on:
+      - postgres
+    networks:
+      - gmon-network
+
+  rp3-paineis:
+    image: rp3-paineis:1.0.0
+    restart: always
+    container_name: rp3-paineis
+    ports:
+      - "3030:3030"
+    networks:
+      - rp3-network
+
+networks: 
+  rp3-network:
+    name: rp3-network
+    driver: bridge
