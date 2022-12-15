@@ -10,7 +10,7 @@ production:
   database: gmon
   username: postgres
   password: moc1998
-  host: localhost
+  host: 10.193.198.96
 
 homologacao:
   adapter: postgresql

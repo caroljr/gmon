@@ -12,7 +12,7 @@ bind 'tcp://0.0.0.0:8080'
 workers 2
 
 on_worker_boot do |worker_number|
-  ActiveRecord::Base.establish_connection(host: "postgres", adapter: 'postgresql', database: 'gmon', username: 'postgres', password: "moc1998", pool: '30', encoding: 'utf8')
+  ActiveRecord::Base.establish_connection(host: "10.193.198.96", adapter: 'postgresql', database: 'gmon', username: 'postgres', password: "moc1998", pool: '30', encoding: 'utf8')
   if worker_number === 0
     $scheduler_thread = true
   end
