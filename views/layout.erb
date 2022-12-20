@@ -65,7 +65,7 @@
   <nav id="page-leftbar" role="navigation">
     <ul class="acc-menu" id="sidebar">
 
-      <% if isgmonadmin %>
+      <%# if isgmonadmin %>
         <li><a href="javascript:;"><i class="fa fa-cog"></i> <span>Administração</span></a>
           <ul class="acc-menu">
             <li><a href="admusuarios">Usuários</a></li>
@@ -80,9 +80,8 @@
             <li><a href="auditoria">Auditoria</a></li>
           </ul>
         </li>
-        <li><a href="/catalogo"><i class="fas fa-list-ul"></i> <span>Catálogo</span></a></li>
-      <% end %>
-
+      <%# end %>
+      <li><a href="/catalogo"><i class="fas fa-list-ul"></i> <span>Catálogo</span></a></li>
       <li><a href="/monitores"><i class="fas fa-alarm-exclamation"></i> <span>Monitores</span></a></li>
 
 

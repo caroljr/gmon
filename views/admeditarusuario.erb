@@ -1,0 +1,112 @@
+<style>
+  .ms-container { width:80%; }
+  .ms-container .ms-list { height:150px; }
+</style>
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Administração</li>
+        <li><a href="/admusuarios">Usuários</a></li>
+        <li class="active">Editar</li>
+      </ol>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-gray" id="panelcompleto">
+            <div class="panel-heading">
+              <h4><i class="fa fa-user" style="margin-right:8px;"></i> Editar</h4>
+              <div class="options">
+
+              </div>
+            </div>
+            <div class="panel-body" id="panelbody">
+
+              <form class="form-horizontal" method="POST" id="principal" name="principal" action="/admsubmiteditarusuario">
+                <input type="hidden" name="id" value="<%=@user.id%>">
+                <div class="form-group">
+                  <label class="col-md-1 control-label">Usuário</label>
+                  <div class="col-md-2">
+                    <input type="text" class="form-control" id="username" readonly name="users[username]" value="<%=@user.username%>">
+                  </div>
+
+                  <label class="col-md-1 control-label">Nome</label>
+                  <div class="col-md-3">
+                    <input type="text" class="form-control" id="nome" required name="users[nome]" value="<%=@user.nome%>">
+                  </div>
+
+                  <label class="col-md-2 control-label">Alterar senha</label>
+                  <div class="col-md-2">
+                    <input type="password" class="form-control" id="password" name="users[password]" placeholder="digite nova senha" value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-2 col-md-offset-1">
+                    <button type="submit" class="btn btn-success btn-label"><i class="fa fa-check"></i> Salvar alterações</button>
+                  </div>
+                  <div class="col-md-2 col-md-offset-1">
+                    <button class="btn btn-default btn-label"><i class="fa fa-arrow-left"></i> Cancelar</button>
+                  </div>
+                  <div class="col-md-2 col-md-offset-1">
+                    <button class="btn btn-danger btn-label"><i class="fa fa-times"></i> Excluir usuário</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form name="formExcluir" method="POST" action="/admexcluirusuario">
+  <input type="hidden" name="id" value="<%= @user.id%>">
+</form>
+
+<script type='text/javascript' src="js/jquery.dataTables.min.js"></script>
+<script type='text/javascript' src='assets/plugins/datatables/dataTables.bootstrap.js'></script>
+<script type='text/javascript' src='assets/plugins/jquery-toggles/toggles.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+<script type='text/javascript' src='assets/plugins/form-multiselect/js/jquery.multi-select.min.js'></script>
+<script type='text/javascript' src="js/jquery.quicksearch.js"></script>
+
+<script>
+    const confirmarExclusao = function () {
+        bootbox.confirm({
+            title: "Confirmar exclusão",
+            message: "Você confirma a exclusão do usuário <%=@user.username%>?",
+            buttons: {
+                cancel: {
+                    label: '<i class="fa fa-times"></i> Cancelar'
+                },
+                confirm: {
+                    label: '<i class="fa fa-check"></i> Confirmar'
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    document.forms["formExcluir"].submit();
+                    return;
+                }
+            }
+        });
+    };
+    $("button.btn-danger").on('click', function (e) {
+        e.preventDefault();
+        confirmarExclusao();
+    });
+
+    $("button.btn-default").on('click', function (e) {
+        e.preventDefault();
+        window.location.href = '/admusuarios';
+    });
+
+</script>

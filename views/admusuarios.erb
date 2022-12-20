@@ -1,0 +1,98 @@
+<style>
+.btn-default { color: #000000; border: none; background-color: transparent; }
+
+</style>
+
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Administração</li>
+        <li class="active">Usuários</li>
+      </ol>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7">
+          <div class="panel panel-gray" id="panelcompleto">
+              <div class="panel-heading">
+                <h4><i class="fa fa-user" style="margin-right:8px;"></i> <span>Usuários</span></h4>
+                <div class="options">
+                  <a href="/admcriarusuario"><i class="fa fa-plus-square fa-2x" style="line-height:inherit;" title="Criar usuário"></i></a>
+                </div>
+              </div>
+            <div class="panel-body" id="panelbody">
+              <table id="tabela" class="table table-striped table-bordered datatables">
+                <thead>
+                <th>Usuário</th>
+                <th>Nome</th>
+                <th>Status</th>
+                </thead>
+                <tbody>
+                <% @users.each do |u| %>
+                  <tr>
+                    <td><form method="post" action="/admeditarusuario">
+                      <input type="hidden" name="id" value="<%=u.id%>">
+                      <button class="btn-default" type="submit" class><%=u.username%></button>
+                    </form></td>
+                    <td><%=u.nome%></td>
+                    <td><div class="toggle toggle-modern" data-toggle-usuario="<%=u.id%>" data-toggle-on="<%if u.status%>true<%else%>false<%end%>"></div></td>
+                  </tr>
+                <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript' src="js/jquery.dataTables.min.js"></script>
+<script type='text/javascript' src='assets/plugins/datatables/dataTables.bootstrap.js'></script>
+<script type='text/javascript' src='assets/plugins/jquery-toggles/toggles.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+
+<script>
+    $('.toggle').toggles({
+        drag: true,
+        click: true,
+        text: { on: 'Ativo', off: 'Inativo' },
+        width: 70,
+        type: 'compact'
+    });
+
+    $('.toggle').on('toggle', function(e, active) {
+        const user_id = (e.currentTarget.attributes[1].nodeValue);
+        $.ajax({
+            url: "/admstatuseditar?id=" + user_id + "&status=" + active,
+            method: "POST",
+            context: document.body,
+            success: function () { }
+        })
+    });
+
+    let tabela;
+    $(document).ready(function(){
+        tabela = $('#tabela').dataTable({
+            info:     false,
+            ordering: false,
+            autoWidth: false,
+            scroller: false,
+            paginate: false,
+            columnDefs: [
+                { "width": "30%", "targets": 0, "searchable": true },
+                { "width": "50%", "targets": 1, "searchable": true },
+                { "width": "20%", "targets": 2, "searchable": true }
+            ],
+            dom: 't',
+            order: [[1, 'asc']],
+            language: { zeroRecords: "Nenhum registro encontrado" }
+        });
+    });
+</script>

@@ -1,0 +1,108 @@
+<style>
+  .ms-container { width:80%; }
+  .ms-container .ms-list { height:150px; }
+</style>
+
+<div id="page-content">
+  <div id='wrap'>
+    <div id="page-heading">
+      <ol class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li class="active">Administração</li>
+        <li><a href="/admusuarios">Usuários</a></li>
+        <li class="active">Criar</li>
+      </ol>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-gray" id="panelcompleto">
+            <div class="panel-heading">
+              <h4><i class="fa fa-user" style="margin-right:8px;"></i> Criar</h4>
+              <div class="options">
+
+              </div>
+            </div>
+            <div class="panel-body" id="panelbody">
+
+              <form class="form-horizontal" method="POST" id="principal" name="principal" action="/admcriarusuario">
+                <div class="form-group">
+                  <label class="col-md-1 control-label">Usuário</label>
+                  <div class="col-md-2">
+                    <input autocomplete="false" type="text" class="form-control parsley-validated" required="required" id="username" name="usuario[username]" value="">
+                  </div>
+
+                  <label class="col-md-1 control-label">Nome</label>
+                  <div class="col-md-3">
+                    <input autocomplete="false" type="text" class="form-control" id="nome" required="required" name="usuario[nome]" value="">
+                  </div>
+
+                  <label class="col-md-2 control-label">Senha</label>
+                  <div class="col-md-2">
+                    <input autocomplete="false" type="password" class="form-control" id="password" required="required" name="usuario[password]" value="">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-md-2 col-md-offset-1">
+                    <button type="submit" class="btn btn-success btn-label"><i class="fa fa-check"></i> Salvar</button>
+                  </div>
+                  <div class="col-md-2 col-md-offset-1">
+                    <button class="btn btn-default btn-label"><i class="fa fa-arrow-left"></i> Cancelar</button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type='text/javascript' src="js/jquery.dataTables.min.js"></script>
+<script type='text/javascript' src='assets/plugins/datatables/dataTables.bootstrap.js'></script>
+<script type='text/javascript' src='assets/plugins/jquery-toggles/toggles.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/bootbox.locales.min.js'></script>
+<script type='text/javascript' src='assets/plugins/bootbox/pt-br.js'></script>
+<script type='text/javascript' src='assets/plugins/form-multiselect/js/jquery.multi-select.min.js'></script>
+<script type='text/javascript' src="js/jquery.quicksearch.js"></script>
+
+<script>
+  const getUrlParameter = function getUrlParameter(sParam) {
+      let sPageURL = window.location.search.substring(1),
+          sURLVariables = sPageURL.split('&'),
+          sParameterName,
+          i;
+
+      for (i = 0; i < sURLVariables.length; i++) {
+          sParameterName = sURLVariables[i].split('=');
+
+          if (sParameterName[0] === sParam) {
+              return typeof sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+          }
+      }
+      return false;
+  };
+
+  if (getUrlParameter('alerta') == 1) {
+      $.pnotify({
+          title: 'Erro no cadastro',
+          text: 'O username utilizado já existe. Utilize um username diferente.',
+          history: false,
+          closer: true,
+          closer_hover: false,
+          hide: true,
+          delay: 4000,
+          type: 'error'
+      });
+  }
+
+  $("button.btn-default").on('click', function (e) {
+      e.preventDefault();
+      window.location.href = '/admusuarios';
+  });
+</script>
