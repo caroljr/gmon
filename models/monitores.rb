@@ -1,34 +1,20 @@
-class Monitores < ActiveRecord::Base
-  self.table_name = 'monitores'
-  belongs_to :dru
-  belongs_to :jornada
-  belongs_to :produto
-  belongs_to :microservico
-  belongs_to :sintoma, class_name: :Sintoma
-  belongs_to :statusmonitoracao, class_name: :StatusMonitoracao, foreign_key: "status_monitoracao_id"
+class Mon < ActiveRecord::Base
+  self.table_name = 'monitors'
+  has_many :monitorsitemsrelations, class_name: :MonitorsItemsRelation
+  has_many :items, through: :monitorsitemsrelations
 end
 
-class Dru < ActiveRecord::Base
-  self.table_name = 'dru'
+class Item < ActiveRecord::Base
+  has_many :monitorsitemsrelations, class_name: :MonitorsItemsRelation
+  has_many :mons, through: :monitorsitemsrelations
+  belongs_to :campo
 end
 
-class Jornada < ActiveRecord::Base
-  self.table_name = 'jornada'
+class Campo < ActiveRecord::Base
+  has_many :items
 end
 
-class Produto < ActiveRecord::Base
-  self.table_name = 'produto'
+class MonitorsItemsRelation < ActiveRecord::Base
+  belongs_to :mon
+  belongs_to :item
 end
-
-class Microservico < ActiveRecord::Base
-  self.table_name = 'microservico'
-end
-
-class Sintoma < ActiveRecord::Base
-  self.table_name = 'sintoma'
-end
-
-class StatusMonitoracao < ActiveRecord::Base
-  self.table_name = 'status_monitoracao'
-end
-

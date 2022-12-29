@@ -219,10 +219,12 @@ get '/audit2' do
   data = []
   if data2
     a = JSON.parse(data2)
-    data << {
-      campo: a.keys[0].to_s,
-      valores: a.values[0]
-    }
+    a.keys.each do |k|
+      data << {
+        campo: k,
+        valores: a[k]
+      }
+    end
   end
   data.to_json
 end

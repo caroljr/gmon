@@ -45,6 +45,7 @@
             <tr>
               <th>Detalhes</th>
               <th>Ação</th>
+              <th>ID Registro</th>
               <th>Usuário</th>
               <th>Data</th>
               <th>Campo Alterados</th>
@@ -104,11 +105,11 @@
         $.fn.dataTable.moment('DD/MMM/YY HH:mm');
         moment.locale('pt-br');
         const table = $('#dashboard').DataTable({
-            stateSave: true,
+            stateSave: false,
             info: true,
             paginate: false,
             ordering: true,
-            order: [3, 'desc'],
+            order: [4, 'desc'],
             autoWidth: false,
             scroller: false,
             scrollY: 400,
@@ -126,6 +127,7 @@
             columns: [
                 {orderable: false, data: null, defaultContent: ''},
                 {data: "descricao", className: 'coluna'},
+                {data: "registro_id", className: 'coluna'},
                 {data: "usuario", className: 'coluna'},
                 {
                     data: "created_at", className: 'coluna', render: function (d) {
