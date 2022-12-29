@@ -1,0 +1,43 @@
+## Configurar template1 para Collation pt_BR.UTF-8
+
+postgres=# \l
+                                          Lista dos bancos de dados
+              Nome              |   Dono   | Codificação |  Collation  |    Ctype    | Privilégios de acesso
+--------------------------------+----------+-------------+-------------+-------------+-----------------------
+ postgres                       | postgres | UTF8        | en_US.UTF-8 | en_US.UTF-8 |
+ template0                      | postgres | UTF8        | en_US.UTF-8 | en_US.UTF-8 | =c/postgres
+                                                                                     : postgres=CTc/postgres
+ template1                      | postgres | UTF8        | pt_BR.UTF-8 | pt_BR.UTF-8 |
+(3 registros)
+
+## Caso o TEMPLATE1 não esteja configurado para "pt_BR.UTF-8" seguir os passos abaixo
+update pg_database set datallowconn = TRUE where datname = 'template0';
+\c template0
+update pg_database set datistemplate = FALSE where datname = 'template1';
+drop database template1;
+create database template1 with template = template0 encoding = 'UTF8' LC_COLLATE = 'pt_BR.UTF-8' LC_CTYPE = 'pt_BR.UTF-8';
+update pg_database set datistemplate = TRUE where datname = 'template1';
+\c template1
+update pg_database set datallowconn = FALSE where datname = 'template0';
+##
+
+
+## Criar database gmon
+
+-- Database: gmon
+
+-- DROP DATABASE IF EXISTS gmon;
+
+CREATE DATABASE gmon
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'pt_BR.UTF-8'
+    LC_CTYPE = 'pt_BR.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+GRANT ALL ON DATABASE gmon TO postgres;
+
+GRANT TEMPORARY, CONNECT ON DATABASE gmon TO PUBLIC;
