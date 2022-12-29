@@ -1,40 +1,5 @@
 get '/monitores' do
   authorize!
-  @dru = []
-  Dru.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @dru << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @dru = @dru.to_json
-
-  @jornada = []
-  Jornada.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @jornada << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @jornada = @jornada.to_json
-
-  @produto = []
-  Produto.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @produto << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @produto = @produto.to_json
-
-  @microservico = []
-  Microservico.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @microservico << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @microservico = @microservico.to_json
-
-  @sintoma = []
-  Sintoma.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @sintoma << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @sintoma = @sintoma.to_json
-
-  @statusmonitoracao = []
-  StatusMonitoracao.order(:nome).pluck(:id, :nome).each do |id,nome|
-    @statusmonitoracao << { "label": "#{nome}", "value": "#{nome}" }
-  end
-  @statusmonitoracao = @statusmonitoracao.to_json
 
   erb :monitores
 end
