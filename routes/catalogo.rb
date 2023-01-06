@@ -52,6 +52,12 @@ get '/atualizartags' do
     item.assign_attributes("valor_tag": gera_tag(item["nome"]))
     item.save
   end
+  reg = Campo.all
+  reg.each do |item|
+    atributo = "ccbp-" + gera_tag(item["nome"])
+    item.assign_attributes("atributo_tag": atributo)
+    item.save
+  end
   "ok"
 end
 
