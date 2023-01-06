@@ -238,9 +238,9 @@
             scrollX: false,
             scrollCollapse: true,
             columns: [
-                {data: "campo.nome", width: "15%", className: 'esquerda'},
-                {data: "nome", width: "43%", className: 'esquerda'},
-                {data: "valor_tag", width: "42%", className: 'esquerda'},
+                {data: "campo.nome", width: "24%", className: 'esquerda', orderable: false},
+                {data: "nome", width: "38%", className: 'esquerda'},
+                {data: "valor_tag", width: "38%", className: 'esquerda'},
                 {data: "id", visible: false}
             ],
             dom: "Bfti",
@@ -251,7 +251,7 @@
                   text: "Criar registro"
               }
             ],
-            drawCallback: function () {
+            initComplete: function () {
                 this.api()
                   .columns(0)
                   .every(function () {
@@ -259,7 +259,6 @@
                       let select = $('<select><option value="">Todas</option></select>')
                         .appendTo($(column.header()).empty())
                         .on('change', function () {
-                            console.log($.fn.dataTable.util.escapeRegex($(this).val()))
                             let val = $.fn.dataTable.util.escapeRegex($(this).val());
                             column.search(val ? '^' + val + '$' : '', true, false).draw();
                         });
